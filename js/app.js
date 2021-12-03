@@ -9,14 +9,17 @@ function validarFormulario(e) {
   const terminoBusqueda = document.querySelector("#termino").value;
 
   //Validar formulario, no aceptar campos vacios
-  if (terminoBusqueda == "") {
+  if (terminoBusqueda === "") {
     mostrarAlerta("Debe ingresar datos que sean correctos");
     return;
   }
+
+  buscarImagenes();
 }
 
 function mostrarAlerta(mensaje) {
-  const alertaExiste = document.querySelector("bg-red-100");
+
+  const alertaExiste = document.querySelector('.bg-red-100');
 
   if (!alertaExiste) { // Si existe que solamente se vea una vez y no cada vez que apretamos el boton
     const alerta = document.createElement("p");
@@ -44,4 +47,20 @@ function mostrarAlerta(mensaje) {
       alerta.remove();
     }, 3000);
   }
+}
+
+function buscarImagenes(termino){
+
+    const key = '24646168-2a770a2ec9aa619292b395e35';
+    const url = `https://pixabay.com/api/?key=${key}&q=${termino}`;
+
+    fetch(url)
+    .then(respuesta => respuesta.json())
+    .then(resultado => {
+        mostrarImagenes(resultado.hits);
+    })
+}
+
+function mostrarImagenes(imagenes){
+    console.log(imagenes);
 }
